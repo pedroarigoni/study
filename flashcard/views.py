@@ -51,8 +51,18 @@ def novo_flashcard(request):
 
 
 def deletar_flashcard(request, id):
-    flashcard = Flashcard.objects.get(id=id)
-    flashcard.delete()
-    messages.add_message(request, constants.SUCCESS,
-                         'Flashcard apagado com sucesso!')
-    return redirect('/flashcard/novo_flashcard/')
+    try:
+        flashcard = Flashcard.objects.get(id=id)
+    except Flashcard.DoesNotExist:
+        messages.add_message(request, constants.ERROR,
+                             'Flashcard não encontrado.')
+        return redirect('/flashcard/novo_flashcard/')
+    if request.user.id == flashcard.user_id:
+        flashcard.delete()
+        messages.add_message(request, constants.SUCCESS,
+                             'Flashcard apagado com sucesso!')
+        return redirect('/flashcard/novo_flashcard/')
+    else:
+        messages.add_message(request, constants.WARNING,
+                             'Este flashcard não pode ser apagado por você, espertinho!')
+        return redirect('/flashcard/novo_flashcard/')
