@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% load static %} {% block 'cabecalho' %}
 <link href="{% static 'usuarios/css/cadastro.css' %}" rel="stylesheet" />
 <link href="{% static 'flashcard/css/novo_flashcard.css' %}" rel="stylesheet" />
+<script src="{% static 'flashcard/js/flashcard.js' %}"></script>
 <link
   href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
   rel="stylesheet"
@@ -93,7 +94,7 @@
       <br />
       <br />
       {% for flash in flashcards %}
-      <div class="box-new-flashcard">
+      <div class="box-new-flashcard" onclick="flip_card({{flash.id}})">
         <div class="flashcard">
           <div class="flashcard-categoria">{{flash.categoria}}</div>
           <a href=""><i class="icone-exit bx bx-x-circle"></i></a>
@@ -103,7 +104,9 @@
             <p class="flashcard-item">{{flash.pergunta}}</p>
           </div>
         </div>
-        <div class="resposta-flashcard">{{flash.resposta}}</div>
+        <div class="resposta-flashcard" id="{{flash.id}}">
+          {{flash.resposta}}
+        </div>
       </div>
       <br />
       <br />
