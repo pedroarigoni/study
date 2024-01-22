@@ -92,8 +92,6 @@ def iniciar_desafio(request):
         for categoria in categorias:
             desafio.categoria.add(categoria)
 
-        desafio.save()
-
         flashcards = (Flashcard.objects.filter(user=request.user)
                                .filter(dificuldade=dificuldade)
                                .filter(categoria_id__in=categorias)
@@ -114,7 +112,7 @@ def iniciar_desafio(request):
 
             desafio.save()
 
-            return redirect('/flashcard/listar_desafio')
+    return redirect('/flashcard/listar_desafio')
 
 
 def listar_desafio(request):
