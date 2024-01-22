@@ -10,4 +10,5 @@ urlpatterns = [
     path('desafio/<int:id>', views.desafio, name='desafio'),
     path('responder_flashcard/<int:id>',
          views.responder_flashcard, name='responder_flashcard'),
+    path('relatorio/<int:id>', views.relatorio, name='relatorio'),
 ]
