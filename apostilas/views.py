@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Apostila
+from .models import Apostila, ViewApostila
 from django.contrib.messages import constants
 from django.contrib import messages
 
 
 def adicionar_apostilas(request):
     if request.method == 'GET':
-        apostilas = Apostila.object.filter(user=request.user)
-        return render(request, 'adicionar_apostilas.html', {'apostilas': apostilas})
+        apostilas = Apostila.objects.filter(user=request.user)
+
+        views_totais = ViewApostila.objects.filter(
+            apostila__user=request.user).count()
+        return render(request, 'adicionar_apostilas.html', {'apostilas': apostilas, 'views_totais': views_totais})
     elif request.method == 'POST':
         titulo = request.POST.get('titulo')
         arquivo = request.FILES['arquivo']
