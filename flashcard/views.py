@@ -116,9 +116,19 @@ def iniciar_desafio(request):
 
 
 def listar_desafio(request):
-    desafios = Desafio.objects.filter(user=request.user)
+    if request.method == 'GET':
+        desafios = Desafio.objects.filter(user=request.user)
+        categorias = Categoria.objects.all()
+        dificuldades = Flashcard.DIFICULDADE_CHOICES
+        return render(request, 'listar_desafio.html', {'desafios': desafios, 'categorias': categorias, 'dificuldades': dificuldades}, )
+    elif request.method == 'POST':
+        categorias = request.POST.get('categoria')
+        dificuldade = request.POST.get('dificuldade')
 
-    return render(request, 'listar_desafio.html', {'desafios': desafios})
+        desafios = Desafio.objects.filter(
+            categoria=categorias).filter(dificuldade=dificuldade)
+
+        return render(request, 'listar_desafio.html', {'desafios': desafios})
 
 
 def desafio(request, id):

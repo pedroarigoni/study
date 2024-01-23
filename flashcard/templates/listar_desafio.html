@@ -5,6 +5,7 @@
  <link href="{% static 'flashcard/css/novo_flashcard.css' %}" rel="stylesheet">
  <link href="{% static 'flashcard/css/iniciar_desafio.css' %}" rel="stylesheet">
  <link href="{% static 'flashcard/css/desafio.css' %}" rel="stylesheet">
+ <link href="{% static 'flashcard/css/limpar_filtros.css' %}" rel="stylesheet">
  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 {% endblock 'cabecalho' %}
 {% block 'conteudo' %}
@@ -15,22 +16,32 @@
  <br>
     <div class="row">
     <div class="col-md">
-        <form action="" method="GET">
+        <form action="{% url 'listar_desafio' %}" method="POST">{% csrf_token %}
          <label for="">Categoria</label>
-            <select name="categoria" class="form-select">
-
-            </select>
+         <select name="categoria" class="form-select" multiple>
+            {% for categoria in categorias %}
+                <option value="{{categoria.id}}">
+                    {{categoria.nome}}
+                </option>
+            {% endfor %}
+    </select>
     </div>
     <div class="col-md">
         <label for="">Dificuldade</label>
-            <select name="dificuldade" class="form-select">
-
-            </select>
+        <select name="dificuldade" class="form-select">
+            {% for dificuldade in dificuldades %}
+                <option value="{{dificuldade.0}}">
+                    {{dificuldade.1}}
+                </option>
+            {% endfor %}
+    </select>
         </div>
  <div class="col-md">
  <br>
         <input type="submit" value="Filtrar" class="btn-cadastro">
         </form>
+        <a href="/flashcard/listar_desafio" class="btn-cadastro">Limpar filtros</a>
+
     </div>
     </div>
  <br>
