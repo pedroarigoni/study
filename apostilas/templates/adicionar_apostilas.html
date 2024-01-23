@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block 'cabecalho' %}
-AULA 3 3
  <link href="{% static 'usuarios/css/cadastro.css' %}" rel="stylesheet">
  <link href="{% static 'flashcard/css/novo_flashcard.css' %}" rel="stylesheet">
  <link href="{% static 'flashcard/css/iniciar_desafio.css' %}" rel="stylesheet">
@@ -13,6 +12,8 @@ AULA 3 3
  {% include "partials/header.html" %}
  <div class="container">
  <br><br>
+    <div class="fonte-secundaria">Apostilas - {{request.user}}</div>
+ 
  <div class="row">
  <div class="col-md">
  <div class="box-form">
@@ -25,7 +26,9 @@ AULA 3 3
  {% endfor %}
  <br>
  {% endif %}
+ 
  <form action="{% url 'adicionar_apostilas' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+ 
  <p class="fonte-secundaria">Adicionar resumos</p>
  <label>Titulo</label>
  <input type="text" name="titulo" placeholder="titulo" class="form-control">
